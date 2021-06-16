@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const carsRoutes = require('./routers/cars');
+const { MongoURL } = require('./URL');
 
 var PORT = process.env.PORT || 3001;
 
-mongoose.connect('mongodb+srv://paragg:paragg@cluster0.0nwkr.mongodb.net/gcw-cars?retryWrites=true&w=majority', () => {
+mongoose.connect(MongoURL, () => {
     console.log("Connected to DB gwc-cars");
 });
 mongoose.Promise = global.Promise;
