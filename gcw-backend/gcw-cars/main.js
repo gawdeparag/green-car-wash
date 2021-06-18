@@ -10,18 +10,21 @@ const swaggerUi = require('swagger-ui-express');
 var PORT = process.env.PORT || 3001;
 
 const swaggerOptions = {
-    swaggerDefinition: {
+    definition: {
         info: {
-            title: "APIs for Cars service",
-            description: "APIs that are of cars service",
+            title: "APIs for Cars-service",
+            description: "Cars-Service APIs",
             contact: {
                 name: "Parag G."
             },
-            servers: ["http://localhost:3001"]
+            servers: [{
+                url: "http://localhost:3001"
+            }]
         }
     },
-    apis: ["./routes/*.js"]
+    apis: ["./routers/*.js"]
 };
+
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 

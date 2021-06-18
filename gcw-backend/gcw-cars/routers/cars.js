@@ -8,11 +8,11 @@ router.use(bodyParser.json());
 /** 
  *  @swagger
  *  /cars/:
- *      get:
- *          summary: To get the list of all cars
- *          responses: 
- *              200:
- *                  description: A successful response
+ *  get:
+ *      summary: "To get the list of all cars"
+ *      responses: 
+ *          '200':
+ *              description: A successful response
  */
 router.get('/', (req, res) => {
     Car.find({}).then((cars) => {
@@ -26,10 +26,10 @@ router.get('/', (req, res) => {
  *  @swagger
  *  /cars/:
  *  post:
- *      description: Used to post a new car
+ *      summary: "To add a car"
  *      responses: 
- *          200
- *          description: A successful response
+ *          '200':
+ *              description: A successful response
  */
 router.post('/', (req, res) => {
     Car.create(req.body).then((car) => {
@@ -41,12 +41,12 @@ router.post('/', (req, res) => {
 
 /** 
  *  @swagger
- *  /cars:
+ *  /cars/:
  *  put:
- *      description: Used to update a car
+ *      summary: "To edit a car"
  *      responses: 
- *          200
- *          description: A successful response
+ *          '200':
+ *              description: A successful response
  */
 router.put('/:id', (req, res) => {
     Car.findByIdAndUpdate({ _id: req.params.id }, req.body).then(() => {
@@ -64,10 +64,10 @@ router.put('/:id', (req, res) => {
  *  @swagger
  *  /cars/:
  *  delete:
- *      description: Used to delete a car
+ *      summary: "To delete a car"
  *      responses: 
- *          200
- *          description: A successful response
+ *          '200':
+ *              description: A successful response
  */
 router.delete('/:id', (req, res) => {
     Car.findByIdAndRemove({ _id: req.params.id }).then((car) => {
