@@ -26,7 +26,9 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/cars-api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/userCars-api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 app.set('view engine', 'ejs');
 

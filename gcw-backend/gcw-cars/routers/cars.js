@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const Car = require('../models/Car');
+const carController = require('../controllers/carControllers');
 
 router.use(bodyParser.json());
 
@@ -14,71 +15,53 @@ router.use(bodyParser.json());
  *          '200':
  *              description: A successful response
  */
-router.get('/', (req, res) => {
-    Car.find({}).then((cars) => {
-        res.render('cars', { cars: cars });
-    }).catch((err) => {
-        res.json({ message: err.message });
-    });
-});
+router.get('/', carController.getCars);
 
 /** 
  *  @swagger
  *  /cars/:
  *  post:
- *      summary: "To add a car"
- *      responses: 
- *          '200':
- *              description: A successful response
- */
-router.post('/', (req, res) => {
-    Car.create(req.body).then((car) => {
-        res.send(car);
-    }).catch((err) => {
-        res.json({ message: err.message });
-    });
-});
-
-/** 
- *  @swagger
- *  /cars/:
- *  put:
+ *      parameters:
+ *          - in: "body"
+ *            name: "body"
+ *            required: true
+ *            schema: 
+ *                  type: object
  *      summary: "To edit a car"
  *      responses: 
  *          '200':
  *              description: A successful response
  */
-router.put('/:id', (req, res) => {
-    Car.findByIdAndUpdate({ _id: req.params.id }, req.body).then(() => {
-        Car.findOne({ _id: req.params.id }).then((car) => {
-            res.send(car);
-        }).catch((err) => {
-            res.json({ message: err.message });
-        });
-    }).catch((err) => {
-        res.json({ message: err.message });
-    });
-});
+router.post('/', carController.addCar);
 
 /** 
  *  @swagger
- *  /cars/:
- *  delete:
- *      summary: "To delete a car"
+ *  /cars/{id}:
+ *  put:
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            type: string
+ *      summary: "To edit a car"
  *      responses: 
  *          '200':
  *              description: A successful response
  */
-router.delete('/:id', (req, res) => {
-    Car.findByIdAndRemove({ _id: req.params.id }).then((car) => {
-        if (car && car !== null) {
-            res.json({ message: "Car successfully deleted" });
-        } else {
-            res.json({ message: "Couldn't find the requested car" });
-        }
-    }).catch((err) => {
-        res.json({ message: err.message });
-    });
-});
+router.put('/:id', carController.updateCar);
+
+/**
+ * @swagger
+ * /cars/{id}:
+ *   delete:
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        type: string
+ *     summary: "To delete a car"
+ *     responses:
+ *       200:
+ *         description: Returns the requested car
+ */
+router.delete('/:id', carController.deleteCar);
 
 module.exports = router;
