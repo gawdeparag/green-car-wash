@@ -12,7 +12,7 @@ mongoose.connect(MongoURL, () => {
 });
 mongoose.Promise = global.Promise;
 
-app.use(orderRoutes);
+app.use('/order', orderRoutes);
 
 app.listen(PORT, () => {
     console.log(`Order Service Started at ${PORT}`);
