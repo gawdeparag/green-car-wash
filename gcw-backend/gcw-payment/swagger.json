@@ -1,0 +1,107 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "On-demand Car Wash Application",
+        "description": "APIs of Payment Microservice"
+    },
+    "host": "localhost:3003",
+    "basePath": "/",
+    "tags": [{
+        "name": "Payment Details",
+        "description": "APIs for payment details"
+    }],
+    "schemes": ["http"],
+
+    "paths": {
+        "/payment/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of payment details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update payment details with give ID",
+                "tags": ["Payment Details"],
+                "parameters": [{
+                    "name": "PaymentDetails",
+                    "in": "body",
+                    "description": "Payment details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Payment Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Payment"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete user with given ID",
+                "tags": ["Payment Details"],
+                "responses": {
+                    "200": {
+                        "description": "Payment is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Payment"
+                        }
+                    }
+                }
+            }
+        },
+        "/payment": {
+            "get": {
+                "tags": ["Payment Details"],
+                "summary": "Get all payment-details in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Payment Details"
+                ],
+                "description": "Create new payment details in system",
+                "parameters": [{
+                    "name": "payment-details",
+                    "in": "body",
+                    "description": "Payment that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/Payment"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New payment-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/Payment"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Payment": {
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "orderId": {
+                    "type": "string"
+                },
+                "paymentOption": {
+                    "type": "string"
+                },
+                "totalAmount": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
