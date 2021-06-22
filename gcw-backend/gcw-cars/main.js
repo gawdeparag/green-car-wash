@@ -4,31 +4,12 @@ const mongoose = require('mongoose');
 const carsRoutes = require('./routers/cars');
 const UserCarsRoutes = require('./routers/userCars');
 const { MongoURL } = require('./URL');
-const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 var PORT = process.env.PORT || 3001;
 
-const swaggerOptions = {
-    definition: {
-        info: {
-            title: "APIs for Cars-service",
-            description: "Cars-Service APIs",
-            contact: {
-                name: "Parag G."
-            },
-            servers: [{
-                url: "http://localhost:3001"
-            }]
-        }
-    },
-    apis: ["./routers/*.js"]
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/cars-api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use('/userCars-api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.set('view engine', 'ejs');
 

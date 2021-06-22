@@ -1,0 +1,203 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "On-demand Car Wash Application",
+        "description": "APIs of Car Microservice"
+    },
+    "host": "localhost:3001",
+    "basePath": "/",
+    "tags": [{
+        "name": "Car Microservice",
+        "description": "All APIs for Car details"
+    }],
+    "schemes": ["http"],
+
+    "paths": {
+        "/cars/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of car details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update car details with give ID",
+                "tags": ["Car Details"],
+                "parameters": [{
+                    "name": "CarDetails",
+                    "in": "body",
+                    "description": "Car details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Car Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Car"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete user with given ID",
+                "tags": ["Car Details"],
+                "responses": {
+                    "200": {
+                        "description": "Car is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Car"
+                        }
+                    }
+                }
+            }
+        },
+        "/cars": {
+            "get": {
+                "tags": ["Car Details"],
+                "summary": "Get all car-details in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Car Details"
+                ],
+                "description": "Create new car details in system",
+                "parameters": [{
+                    "name": "car-details",
+                    "in": "body",
+                    "description": "Car that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/Car"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New car-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/Car"
+                        }
+                    }
+                }
+            }
+        },
+        "/user-cars/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of user's car that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update user's car details with give ID",
+                "tags": ["User Car Details"],
+                "parameters": [{
+                    "name": "UserCarDetails",
+                    "in": "body",
+                    "description": "Car details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User Car Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/UserCar"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a user's car with given ID",
+                "tags": ["User Car Details"],
+                "responses": {
+                    "200": {
+                        "description": "User's Car is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/UserCar"
+                        }
+                    }
+                }
+            }
+        },
+        "/user-cars": {
+            "get": {
+                "tags": ["User Car Details"],
+                "summary": "Get all user's cars in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User Car Details"
+                ],
+                "description": "Create new User car details in system",
+                "parameters": [{
+                    "name": "userCar-details",
+                    "in": "body",
+                    "description": "Car that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/UserCar"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New car is created for user",
+                        "schema": {
+                            "$ref": "#/definitions/UserCar"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Car": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "number"
+                },
+                "createdBy": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserCar": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "isServicedEarlier": {
+                    "type": "boolean"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
