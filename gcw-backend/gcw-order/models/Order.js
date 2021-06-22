@@ -25,7 +25,8 @@ const OrderSchema = new mongoose.Schema({
     },
     isDone: {
         type: Boolean,
-        default: false
+        default: false,
+        required: true
     },
     totalCost: {
         type: Number,
