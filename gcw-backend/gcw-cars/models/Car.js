@@ -16,6 +16,17 @@ const CarSchema = new Schema({
     },
     year: {
         type: Number
+    },
+    createdBy: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: String,
+        default: Date.now()
+    },
+    updatedAt: {
+        type: String
     }
 });
 
