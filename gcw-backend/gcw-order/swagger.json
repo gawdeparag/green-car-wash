@@ -1,0 +1,120 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "On-demand Car Wash Application",
+        "description": "APIs of Order Microservice"
+    },
+    "host": "localhost:3002",
+    "basePath": "/",
+    "tags": [{
+        "name": "Order Details",
+        "description": "APIs for order details"
+    }],
+    "schemes": ["http"],
+
+    "paths": {
+        "/order/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of order details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update order details with give ID",
+                "tags": ["Order Details"],
+                "parameters": [{
+                    "name": "PaymentDetails",
+                    "in": "body",
+                    "description": "Order details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete order with given ID",
+                "tags": ["Order Details"],
+                "responses": {
+                    "200": {
+                        "description": "Order is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            }
+        },
+        "/order": {
+            "get": {
+                "tags": ["Order Details"],
+                "summary": "Get all order-details in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Order Details"
+                ],
+                "description": "Create new order details in system",
+                "parameters": [{
+                    "name": "order-details",
+                    "in": "body",
+                    "description": "Order that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/Order"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New order-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Order": {
+            "properties": {
+                "carName": {
+                    "type": "string"
+                },
+                "carBrand": {
+                    "type": "string"
+                },
+                "serviceName": {
+                    "type": "string"
+                },
+                "serviceCost": {
+                    "type": "number"
+                },
+                "isDone": {
+                    "type": "boolean"
+                },
+                "totalCost": {
+                    "type": "number"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "bookedDate": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    }
+}
