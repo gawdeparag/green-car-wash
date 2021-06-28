@@ -1,0 +1,219 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "On-demand Car Wash Application",
+        "description": "APIs of Service Microservice"
+    },
+    "host": "localhost:3004",
+    "basePath": "/",
+    "tags": [{
+        "name": "Service Details",
+        "description": "APIs for service details"
+    }],
+    "schemes": ["http"],
+
+    "paths": {
+        "/service/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of service details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update service details with give ID",
+                "tags": ["Service Details"],
+                "parameters": [{
+                    "name": "ServiceDetails",
+                    "in": "body",
+                    "description": "Service details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Service Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Service"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete service with given ID",
+                "tags": ["Service Details"],
+                "responses": {
+                    "200": {
+                        "description": "Service is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Service"
+                        }
+                    }
+                }
+            }
+        },
+        "/add-on/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of Add On details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Update add-on details with give ID",
+                "tags": ["AddOn Details"],
+                "parameters": [{
+                    "name": "AddOnDetails",
+                    "in": "body",
+                    "description": "AddOn details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "AddOn Details is updated",
+                        "schema": {
+                            "$ref": "#/definitions/AddOn"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete add-on with given ID",
+                "tags": ["AddOn Details"],
+                "responses": {
+                    "200": {
+                        "description": "AddOn is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/AddOn"
+                        }
+                    }
+                }
+            }
+        },
+        "/service": {
+            "get": {
+                "tags": ["Service Details"],
+                "summary": "Get all service-details in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Details"
+                ],
+                "description": "Create new service details in system",
+                "parameters": [{
+                    "name": "service-details",
+                    "in": "body",
+                    "description": "Service that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/Service"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New service-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/Service"
+                        }
+                    }
+                }
+            }
+        },
+        "/add-on": {
+            "get": {
+                "tags": ["AddOn Details"],
+                "summary": "Get all addon-details in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "AddOn Details"
+                ],
+                "description": "Create new addon details in system",
+                "parameters": [{
+                    "name": "addon-details",
+                    "in": "body",
+                    "description": "AddOn that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/AddOn"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New addon-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/AddOn"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Service": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "carId": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "isActive": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "AddOn": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "serviceId": {
+                    "type": "string"
+                },
+                "carId": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "isActive": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
