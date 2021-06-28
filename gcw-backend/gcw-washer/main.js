@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const washerRoutes = require('./routers/washer');
+const washerLoginRoutes = require('./routers/washerLogin');
 const mongoose = require('mongoose');
 const { MongoURL } = require('./URL');
 
@@ -11,7 +11,7 @@ mongoose.connect(MongoURL, () => {
 });
 mongoose.Promise = global.Promise;
 
-app.use(washerRoutes);
+app.use('/washer', washerLoginRoutes);
 
 app.listen(PORT, () => {
     console.log(`Washer Service Started at ${PORT}`);
