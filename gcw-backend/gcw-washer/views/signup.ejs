@@ -1,0 +1,60 @@
+<form>
+    <h2>Washer Sign Up</h2>
+
+    <label for="name">Name</label>
+    <input type="text" name="name">
+
+    <label for="email">Email</label>
+    <input type="text" name="email" required>
+    <div class="email error"></div>
+
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <div class="username error"></div>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <div class="password error"></div>
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" name="confirmPassword" required>
+    <div class="password error"></div>
+
+    <button>Sign Up</button>
+
+</form>
+
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const name = form.name.value;
+        const email = form.email.value;
+        const username = form.username.value;
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
+
+        try {
+            const res = await fetch('/washer/signup', {
+                method: "POST",
+                body: JSON.stringify({
+                    name,
+                    email,
+                    username,
+                    password,
+                    confirmPassword
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await res.json();
+            if (data.washer) {
+                location.assign('/washer/profile');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    })
+</script>
