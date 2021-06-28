@@ -5,25 +5,16 @@ const getLogin = (req, res) => {
     res.render('login');
 };
 
-const login = (req, res) => {
-    const { userName, password } = req.body;
+const login = async(req, res) => {
+    const { email, password } = req.body;
     try {
-        User.findOne({ userName: userName }).then((user) => {
-            if (user.password === password) {
-                User.updateOne({ userName: userName }, { lastLoggedIn: Date.now() }).then((user) => {
-                    console.log("Login Successful");
-                }).catch((err) => {
-                    console.log(err);
-                });
-                res.send("Login Successful");
-            } else {
-                res.send("Login Unsuccessful");
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+        const user = await User.login(email, password);
+        const token = createToken(user._id);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json({ user: user._id });
     } catch (error) {
         console.error(error);
+        res.status(400).json({});
     }
 };
 
@@ -54,9 +45,15 @@ const signup = (req, res) => {
     }
 };
 
+const logout = (req, res) => {
+    console.log("Function reached here!");
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('logout');
+};
+
 const maxAge = 1 * 24 * 60 * 60;
 const createToken = (id) => {
     return jwt.sign({ id }, 'gcw-secret', { expiresIn: maxAge })
 }
 
-module.exports = { getLogin, getSignup, login, signup }
+module.exports = { getLogin, getSignup, login, signup, logout }
