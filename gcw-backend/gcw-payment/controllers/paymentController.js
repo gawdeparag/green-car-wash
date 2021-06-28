@@ -12,7 +12,7 @@ const addPaymentDetails = (req, res) => {
     PaymentDetails.create(req.body).then((paymentDetails) => {
         res.send(paymentDetails);
     }).catch((err) => {
-        res.json({ message: err.message });
+        res.status(400).json({ message: err.message });
     });
 };
 
@@ -21,10 +21,10 @@ const updatePaymentDetails = (req, res) => {
         PaymentDetails.findById({ _id: req.params.id }).then((paymentDetails) => {
             res.send(paymentDetails);
         }).catch((err) => {
-            res.json({ message: err.message });
+            res.status(400).json({ message: err.message });
         })
     }).catch((err) => {
-        res.json({ message: err.message });
+        res.status(404).json({ message: err.message });
     });
 };
 

@@ -1,20 +1,23 @@
 {
-  "name": "gcw-payment",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Parag G",
-  "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^2.0.7",
-    "swagger-ui-express": "^4.1.6"
-  },
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.12.14"
-  }
+    "name": "gcw-payment",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "test": "mocha --timeout 15000"
+    },
+    "author": "Parag G",
+    "license": "MIT",
+    "devDependencies": {
+        "chai": "^4.3.4",
+        "chai-http": "^4.3.0",
+        "mocha": "^9.0.1",
+        "nodemon": "^2.0.7",
+        "swagger-ui-express": "^4.1.6"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.12.14"
+    }
 }

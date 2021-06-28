@@ -19,3 +19,5 @@ app.use('/payment', paymentRoutes);
 app.listen(PORT, () => {
     console.log(`Payment Service Started at ${PORT}`);
 });
+
+module.exports = { app: app, router: paymentRoutes }
