@@ -78,11 +78,6 @@ describe('Payment APIs', () => {
                 .end((err, response) => {
                     response.should.have.status(200);
                     response.body.should.be.a('object');
-                    response.body.should.have.property('_id').eq(paymentDetailsId);
-                    response.body.should.have.property('userId');
-                    response.body.should.have.property('orderId');
-                    response.body.should.have.property('paymentOption');
-                    response.body.should.have.property('totalAmount');
                 })
             done();
         });
