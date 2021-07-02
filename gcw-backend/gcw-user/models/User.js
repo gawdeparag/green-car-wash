@@ -22,7 +22,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        unique: true,
         minlength: [6, 'Minimum password length should be 6 characters']
     },
     createdAt: {
@@ -32,6 +31,10 @@ const UserSchema = new Schema({
     lastLoggedIn: {
         type: Date,
         default: Date.now()
+    },
+    userType: {
+        type: String,
+        required: true
     }
 });
 

@@ -1,59 +1,190 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-const getLogin = (req, res) => {
-    res.render('login');
-};
-
-const login = async(req, res) => {
-    const { email, password } = req.body;
+const loginAsUser = async(req, res) => {
     try {
-        const user = await User.login(email, password);
-        const token = createToken(user._id);
+        const request = {
+            email: req.body.email,
+            password: req.body.password,
+            userType: "User"
+        };
+        const user = await User.login(request.email, request.password);
+        const token = createToken(user._id, user.email, user.userType);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(200).json({ user: user._id });
+        res.status(200).json({ user: user._id, message: "Login successful" });
     } catch (error) {
-        console.error(error);
-        res.status(400).json({});
+        res.json({ error: error.message });
     }
 };
 
-const getSignup = (req, res) => {
-    res.render('signup');
+const loginAsAdmin = async(req, res) => {
+    try {
+        const request = {
+            email: req.body.email,
+            password: req.body.password,
+            userType: "Admin"
+        };
+        const user = await User.login(request.email, request.password);
+        const token = createToken(user._id, user.email, user.userType);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json({ user: user._id, message: "Login successful" });
+    } catch (error) {
+        res.json({ error: error.message });
+    }
 };
 
-const signup = (req, res) => {
+const loginAsWasher = async(req, res) => {
     try {
-        const { name, email, userName, password, confirmPassword } = req.body;
-        if (password === confirmPassword) {
-            User.create(req.body).then((user) => {
+        const request = {
+            email: req.body.email,
+            password: req.body.password,
+            userType: "Washer"
+        };
+        const user = await User.login(request.email, request.password);
+        const token = createToken(user._id, user.email, user.userType);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json({ user: user._id, message: "Login successful" });
+    } catch (error) {
+        res.send(error);
+    }
+};
+
+const signupAsUser = (req, res) => {
+    try {
+        const newUser = {
+            name: req.body.name,
+            email: req.body.email,
+            userName: req.body.userName,
+            password: req.body.password,
+            confirmPassword: req.body.confirmPassword,
+            userType: "User"
+        };
+        if (newUser.password === newUser.confirmPassword) {
+            User.create(newUser).then((user) => {
                 if (user) {
-                    const token = createToken(user._id);
+                    const token = createToken(user._id, user.email, user.userType);
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                    res.send("Signup Successful");
+                    res.json({ message: "Signup Successful" });
                 } else {
-                    res.send("Signup Unsuccessful");
+                    return { message: "Signup Failed" };
                 }
             }).catch((err) => {
-                console.log(err);
+                return { error: err.message };
             });
         } else {
-            res.send("Passwords do not match");
+            res.json({ message: "Passwords do not match" });
         }
     } catch (error) {
-        console.error(error);
+        res.json({ error: error.message });
+    }
+}
+
+const signupAsAdmin = (req, res) => {
+    try {
+        const newAdmin = {
+            name: req.body.name,
+            email: req.body.email,
+            userName: req.body.userName,
+            password: req.body.password,
+            confirmPassword: req.body.confirmPassword,
+            userType: "Admin"
+        };
+        if (newAdmin.password === newAdmin.confirmPassword) {
+            User.create(newAdmin).then((admin) => {
+                if (admin) {
+                    const token = createToken(admin._id, admin.email, admin.userType);
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                    res.json({ message: "Signup Successful" });
+                } else {
+                    res.json({ message: "Signup Failed" });
+                }
+            }).catch((err) => {
+                res.json({ error: err.message });
+            });
+        } else {
+            res.json({ message: "Passwords do not match" });
+        }
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+}
+
+const signupAsWasher = (req, res) => {
+    try {
+        const newWasher = {
+            name: req.body.name,
+            email: req.body.email,
+            userName: req.body.userName,
+            password: req.body.password,
+            confirmPassword: req.body.confirmPassword,
+            userType: "Washer"
+        };
+        if (newWasher.password === newWasher.confirmPassword) {
+            User.create(newWasher).then((washer) => {
+                if (washer) {
+                    const token = createToken(washer._id, washer.email, washer.userType);
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                    res.json({ message: "Signup Successful" });
+                } else {
+                    res.json({ message: "Signup Failed" });
+                }
+            }).catch((err) => {
+                res.json({ error: err.message });
+            });
+        } else {
+            res.json({ message: "Passwords do not match" });
+        }
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+}
+
+const getAllUsers = (req, res) => {
+    if (req.userType && req.userType === "Admin") {
+        User.find({ userType: "User" }).then((users) => {
+            res.send(users);
+        }).catch((err) => {
+            res.json({ error: err.message });
+        });
+    } else {
+        res.json({ error: "Invalid User" });
+    }
+};
+
+const getAllWashers = (req, res) => {
+    if (req.userType && req.userType === "Admin") {
+        User.find({ userType: "Washer" }).then((washers) => {
+            if (washers && washers.length > 0) {
+                res.send(washers);
+            } else {
+                res.json({ error: "Washers not found" });
+            }
+        }).catch((err) => {
+            res.json({ error: err.message });
+        });
+    } else {
+        res.json({ error: "Invalid User" });
     }
 };
 
 const logout = (req, res) => {
-    console.log("Function reached here!");
     res.cookie('jwt', '', { maxAge: 1 });
-    res.redirect('logout');
+    res.json({ message: "Logout successful" });
 };
 
 const maxAge = 1 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'gcw-secret', { expiresIn: maxAge })
+const createToken = (id, email, userType) => {
+    return jwt.sign({ id, email, userType }, 'gcw-secret', { expiresIn: maxAge })
 }
 
-module.exports = { getLogin, getSignup, login, signup, logout }
+module.exports = {
+    loginAsUser,
+    loginAsAdmin,
+    loginAsWasher,
+    signupAsUser,
+    signupAsAdmin,
+    signupAsWasher,
+    getAllUsers,
+    getAllWashers,
+    logout
+}
