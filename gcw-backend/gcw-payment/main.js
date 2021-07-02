@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 const paymentRoutes = require('./routers/payment');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const cookieParser = require('cookie-parser');
 
 var PORT = process.env.PORT || 3003;
 
+app.use(cookieParser());
 app.use('/payment-api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 mongoose.connect('mongodb+srv://paragg:paragg@cluster0.0nwkr.mongodb.net/gcw-payment?retryWrites=true&w=majority', () => {
