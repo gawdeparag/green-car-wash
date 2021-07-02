@@ -12,9 +12,17 @@
         "description": "APIs for order details"
     }],
     "schemes": ["http"],
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie"
+            }
+        }
+    },
 
     "paths": {
-        "/order/{id}": {
+        "/{id}": {
             "parameters": [{
                 "in": "path",
                 "name": "id",
@@ -26,7 +34,7 @@
                 "summary": "Update order details with give ID",
                 "tags": ["Order Details"],
                 "parameters": [{
-                    "name": "PaymentDetails",
+                    "name": "OrderDetails",
                     "in": "body",
                     "description": "Order details with new values of properties"
                 }],
@@ -52,7 +60,7 @@
                 }
             }
         },
-        "/order": {
+        "/": {
             "get": {
                 "tags": ["Order Details"],
                 "summary": "Get all order-details in system",
@@ -81,6 +89,54 @@
                         "schema": {
                             "$ref": "#/definitions/Order"
                         }
+                    }
+                }
+            }
+        },
+        "/assign-order/{id}": {
+            "parameters": [{
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "ID of order details that we want to find",
+                "type": "string"
+            }],
+            "put": {
+                "summary": "Assign order to a washer",
+                "tags": ["Order Details"],
+                "parameters": [{
+                    "name": "OrderDetails",
+                    "in": "body",
+                    "description": "Order details with new values of properties"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order Details is assigned",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            }
+        },
+        "/pending-orders/": {
+            "get": {
+                "tags": ["Order Details"],
+                "summary": "Get all pending orders in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/all-orders/": {
+            "get": {
+                "tags": ["Order Details"],
+                "summary": "Get all orders in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }

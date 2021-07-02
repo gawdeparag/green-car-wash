@@ -12,9 +12,17 @@
         "description": "All APIs for Car details"
     }],
     "schemes": ["http"],
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie"
+            }
+        }
+    },
 
     "paths": {
-        "/cars/{id}": {
+        "/{id}": {
             "parameters": [{
                 "in": "path",
                 "name": "id",
@@ -52,7 +60,7 @@
                 }
             }
         },
-        "/cars": {
+        "/": {
             "get": {
                 "tags": ["Car Details"],
                 "summary": "Get all car-details in system",
