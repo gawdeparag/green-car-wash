@@ -1,0 +1,213 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "On-demand Car Wash Application",
+        "description": "APIs of User Microservice"
+    },
+    "host": "localhost:3005",
+    "basePath": "/",
+    "tags": [{
+        "name": "User Details",
+        "description": "APIs for user details"
+    }],
+    "schemes": ["http"],
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie"
+            }
+        }
+    },
+
+    "paths": {
+        "/signup/": {
+            "post": {
+                "tags": [
+                    "User Details"
+                ],
+                "description": "Create new admin details in system",
+                "parameters": [{
+                    "name": "user-details",
+                    "in": "body",
+                    "description": "User that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New user-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/login/": {
+            "post": {
+                "tags": [
+                    "User Details"
+                ],
+                "description": "Login user into system",
+                "parameters": [{
+                    "name": "user-details",
+                    "in": "body",
+                    "description": "User that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Login for user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/signup/": {
+            "post": {
+                "tags": [
+                    "Admin Details"
+                ],
+                "description": "Create new admin details in system",
+                "parameters": [{
+                    "name": "admin-details",
+                    "in": "body",
+                    "description": "Admin that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New user-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/login/": {
+            "post": {
+                "security": {
+                    "cookieAuth": []
+                },
+                "tags": [
+                    "Admin Details"
+                ],
+                "description": "Login admin into system",
+                "parameters": [{
+                    "name": "admin-details",
+                    "in": "body",
+                    "description": "Admin that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Login for admin",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/washer/signup/": {
+            "post": {
+                "tags": [
+                    "Washer Details"
+                ],
+                "description": "Create new washer details in system",
+                "parameters": [{
+                    "name": "washer-details",
+                    "in": "body",
+                    "description": "Washer that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "New user-details is created",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/washer/login/": {
+            "post": {
+                "tags": [
+                    "Washer Details"
+                ],
+                "description": "Login washer into system",
+                "parameters": [{
+                    "name": "washer-details",
+                    "in": "body",
+                    "description": "Washer that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Login for washer",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/logout/": {
+            "get": {
+                "tags": ["Logout"],
+                "summary": "Logs out a user",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "userType": {
+                    "type": "string"
+                },
+                "lastLoggedIn": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    }
+}
