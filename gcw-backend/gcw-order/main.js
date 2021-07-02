@@ -19,14 +19,14 @@ app.use(cors(corsOpt)); // cors for all the routes of the application
 app.options('*', cors(corsOpt));
 
 app.use(cookieParser());
-app.use('/order-api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 mongoose.connect(MongoURL, () => {
     console.log("Connected to DB gwc-order");
 });
 mongoose.Promise = global.Promise;
 
-app.use('/order', orderRoutes);
+app.use(orderRoutes);
 
 app.listen(PORT, () => {
     console.log(`Order Service Started at ${PORT}`);

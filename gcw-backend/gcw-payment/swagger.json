@@ -12,9 +12,17 @@
         "description": "APIs for payment details"
     }],
     "schemes": ["http"],
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie"
+            }
+        }
+    },
 
     "paths": {
-        "/payment/{id}": {
+        "/{id}": {
             "parameters": [{
                 "in": "path",
                 "name": "id",
@@ -52,7 +60,7 @@
                 }
             }
         },
-        "/payment": {
+        "/": {
             "get": {
                 "tags": ["Payment Details"],
                 "summary": "Get all payment-details in system",
