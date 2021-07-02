@@ -12,6 +12,14 @@
         "description": "APIs for service details"
     }],
     "schemes": ["http"],
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie"
+            }
+        }
+    },
 
     "paths": {
         "/service/{id}": {
