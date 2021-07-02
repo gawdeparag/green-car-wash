@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const userCarController = require('../controllers/userCarControllers');
+const userAuthMiddleware = require('../../gcw-user/middleware/authMiddleware');
 
 router.use(bodyParser.json());
 
-router.get('/', userCarController.getUserCar);
+router.get('/', userAuthMiddleware, userCarController.getUserCar);
 
-router.post('/', userCarController.addUserCar);
+router.post('/', userAuthMiddleware, userCarController.addUserCar);
 
-router.put('/:id', userCarController.updateUserCar);
+router.put('/:id', userAuthMiddleware, userCarController.updateUserCar);
 
-router.delete('/:id', userCarController.deleteUserCar);
+router.delete('/:id', userAuthMiddleware, userCarController.deleteUserCar);
 
 module.exports = router;
