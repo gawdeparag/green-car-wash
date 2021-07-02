@@ -44,7 +44,10 @@ const OrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    bookedDate: {
+    assignedTo: {
+        type: String
+    },
+    bookedForDate: {
         type: Date,
         required: true
     }

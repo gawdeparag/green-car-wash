@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const paymentController = require('../controllers/paymentController');
+const userAuthMiddleware = require('../../gcw-user/middleware/authMiddleware');
 
 router.use(bodyParser.json());
 
-router.get('/', paymentController.getPaymentDetails);
+router.get('/', userAuthMiddleware, paymentController.getPaymentDetails);
 
-router.post('/', paymentController.addPaymentDetails);
+router.post('/', userAuthMiddleware, paymentController.addPaymentDetails);
 
-router.put('/:id', paymentController.updatePaymentDetails);
+router.put('/:id', userAuthMiddleware, paymentController.updatePaymentDetails);
 
-router.delete('/:id', paymentController.deletePaymentDetails);
+router.delete('/:id', userAuthMiddleware, paymentController.deletePaymentDetails);
 
 module.exports = router;

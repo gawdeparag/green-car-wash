@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const addOnController = require('../controllers/addOnController');
+const authMiddleware = require('../../gcw-user/middleware/userMiddleware');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-router.get('/', addOnController.getAddOns);
+router.get('/', authMiddleware, addOnController.getAddOns);
 
-router.post('/', addOnController.addAddOn);
+router.post('/', authMiddleware, addOnController.addAddOn);
 
-router.put('/:id', addOnController.updateAddOn);
+router.put('/:id', authMiddleware, addOnController.updateAddOn);
 
-router.delete('/:id', addOnController.deleteAddOn);
+router.delete('/:id', authMiddleware, addOnController.deleteAddOn);
 
 module.exports = router;
