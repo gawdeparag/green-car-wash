@@ -45,7 +45,7 @@ const loginAsWasher = async(req, res) => {
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(200).json({ user: user._id, message: "Login successful" });
     } catch (error) {
-        res.send(error);
+        res.json({ error: error.message });
     }
 };
 
@@ -66,13 +66,13 @@ const signupAsUser = (req, res) => {
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
                     res.json({ message: "Signup Successful" });
                 } else {
-                    return { message: "Signup Failed" };
+                    res.json({ error: "Signup Failed" });
                 }
             }).catch((err) => {
-                return { error: err.message };
+                res.json({ error: err.message });
             });
         } else {
-            res.json({ message: "Passwords do not match" });
+            res.json({ error: "Passwords do not match" });
         }
     } catch (error) {
         res.json({ error: error.message });
@@ -96,13 +96,13 @@ const signupAsAdmin = (req, res) => {
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
                     res.json({ message: "Signup Successful" });
                 } else {
-                    res.json({ message: "Signup Failed" });
+                    res.json({ error: "Signup Failed" });
                 }
             }).catch((err) => {
                 res.json({ error: err.message });
             });
         } else {
-            res.json({ message: "Passwords do not match" });
+            res.json({ error: "Passwords do not match" });
         }
     } catch (error) {
         res.json({ error: error.message });
@@ -168,8 +168,12 @@ const getAllWashers = (req, res) => {
 };
 
 const logout = (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    res.json({ message: "Logout successful" });
+    if (req.userType && (req.userType === "User" || req.userType === "Admin" || req.userType === "Washer")) {
+        res.cookie('jwt', '', { maxAge: 1 });
+        res.json({ message: "Logout successful" });
+    } else {
+        res.json({ error: "Try Logging In" });
+    }
 };
 
 const maxAge = 1 * 24 * 60 * 60;
