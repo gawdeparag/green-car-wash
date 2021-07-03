@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const axios = require('axios');
 
 const getOrders = (req, res) => {
     if (req.userType && req.userType === "Admin") {
@@ -12,6 +13,8 @@ const getOrders = (req, res) => {
     }
 };
 
+const paymentURL = "http://localhost:3003/add-payment/";
+
 const createOrder = (req, res) => {
     if (req.userType && req.userType === "User") {
         const newOrder = {
@@ -23,9 +26,20 @@ const createOrder = (req, res) => {
             totalCost: req.body.totalCost,
             bookedForDate: req.body.bookedForDate,
             createdBy: req.userId
-        }
+        };
         Order.create(newOrder).then((order) => {
-            res.send(order);
+            let newPaymentDetails = {
+                orderId: order._id.toString(),
+                totalAmount: order.totalCost,
+                userId: req.userId,
+                userType: req.userType
+            }
+            axios.post(paymentURL, newPaymentDetails).then((response) => {
+                console.log("Payment Details Created successfully for this order");
+            }).catch((err) => {
+                console.log(err);
+            });
+            res.json({ message: "Order created successfully" });
         }).catch((err) => {
             res.json({ error: err.message });
         });
@@ -37,7 +51,7 @@ const createOrder = (req, res) => {
 const updateOrder = (req, res) => {
     if (req.userType && req.userType === "Washer" && req.body.isDone) {
         Order.findOneAndUpdate({ _id: req.params.id, assignedTo: req.userId }, req.body).then(() => {
-            Order.findById({ _id: req.params.id, assignedTo: req.userId }).then((order) => {
+            Order.findOne({ _id: req.params.id, assignedTo: req.userId }).then((order) => {
                 res.send(order);
             }).catch((err) => {
                 res.json({ error: err.message });
@@ -72,7 +86,7 @@ const getOrdersByUserId = (req, res) => {
     } else {
         res.json({ error: "Invalid Request" });
     }
-}
+};
 
 const getPendingOrders = (req, res) => {
     if (req.userType && req.userType === "Washer") {
@@ -84,7 +98,7 @@ const getPendingOrders = (req, res) => {
     } else {
         res.json({ error: "Invalid Request" });
     }
-}
+};
 
 const assignOrder = (req, res) => {
     if (req.userType && req.userType === "Washer") {
@@ -103,7 +117,7 @@ const assignOrder = (req, res) => {
     } else {
         res.json({ error: "Invalid Request " })
     }
-}
+};
 
 module.exports = {
     getOrders,

@@ -13,9 +13,11 @@ const getPaymentDetails = (req, res) => {
 };
 
 const addPaymentDetails = (req, res) => {
-    if (req.userType && req.userType === "User") {
+    if ((req.userType && req.userType === "User") || (req.body && req.body.userType === "User")) {
         let newPaymentDetails = req.body;
-        newPaymentDetails.userId = req.userId;
+        if (!newPaymentDetails.hasOwnProperty('userId')) {
+            newPaymentDetails.userId = req.userId;
+        }
         PaymentDetails.create(newPaymentDetails).then((paymentDetails) => {
             res.send(paymentDetails);
         }).catch((err) => {

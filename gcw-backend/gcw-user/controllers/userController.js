@@ -168,12 +168,8 @@ const getAllWashers = (req, res) => {
 };
 
 const logout = (req, res) => {
-    if (req.userType && (req.userType === "User" || req.userType === "Admin" || req.userType === "Washer")) {
-        res.cookie('jwt', '', { maxAge: 1 });
-        res.json({ message: "Logout successful" });
-    } else {
-        res.json({ error: "Try Logging In" });
-    }
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.json({ message: "Logout successful" });
 };
 
 const maxAge = 1 * 24 * 60 * 60;

@@ -10,8 +10,7 @@ const PaymentDetailsSchema = new mongoose.Schema({
         required: true
     },
     paymentOption: {
-        type: String,
-        required: true
+        type: String
     },
     isPaymentDue: {
         type: Boolean,
