@@ -13,7 +13,7 @@ router.get('/pending-orders/', userAuthMiddleware, orderController.getPendingOrd
 
 router.get('/all-orders/', userAuthMiddleware, orderController.getOrders);
 
-router.post('/', userAuthMiddleware, orderController.createOrder);
+router.post('/create-order/', userAuthMiddleware, orderController.createOrder);
 
 router.put('/:id', userAuthMiddleware, orderController.updateOrder);
 

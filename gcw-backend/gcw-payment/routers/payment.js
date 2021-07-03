@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 
 router.get('/', userAuthMiddleware, paymentController.getPaymentDetails);
 
-router.post('/', userAuthMiddleware, paymentController.addPaymentDetails);
+router.post('/add-payment', paymentController.addPaymentDetails);
 
 router.put('/:id', userAuthMiddleware, paymentController.updatePaymentDetails);
 
