@@ -36,3 +36,5 @@ app.get('/set-cookies', (req, res) => {
 app.listen(PORT, () => {
     console.log(`User Service Started at ${PORT}`);
 });
+
+module.exports = app;

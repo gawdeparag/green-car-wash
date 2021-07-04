@@ -9,11 +9,15 @@ const loginAsUser = async(req, res) => {
             userType: "User"
         };
         const user = await User.login(request.email, request.password);
-        const token = createToken(user._id, user.email, user.userType);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(200).json({ user: user._id, message: "Login successful" });
+        if (user && user !== null) {
+            const token = createToken(user._id, user.email, user.userType);
+            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+            res.status(200).json({ user: user._id, message: "Login successful" });
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
     } catch (error) {
-        res.json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
 
@@ -66,16 +70,16 @@ const signupAsUser = (req, res) => {
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
                     res.json({ message: "Signup Successful" });
                 } else {
-                    res.json({ error: "Signup Failed" });
+                    res.status(404).json({ error: "Signup Failed" });
                 }
             }).catch((err) => {
-                res.json({ error: err.message });
+                res.status(404).json({ error: err.message });
             });
         } else {
-            res.json({ error: "Passwords do not match" });
+            res.status(404).json({ error: "Passwords do not match" });
         }
     } catch (error) {
-        res.json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 }
 
@@ -94,18 +98,18 @@ const signupAsAdmin = (req, res) => {
                 if (admin) {
                     const token = createToken(admin._id, admin.email, admin.userType);
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                    res.json({ message: "Signup Successful" });
+                    res.status(200).json({ message: "Signup Successful" });
                 } else {
-                    res.json({ error: "Signup Failed" });
+                    res.status(404).json({ error: "Signup Failed" });
                 }
             }).catch((err) => {
-                res.json({ error: err.message });
+                res.status(404).json({ error: err.message });
             });
         } else {
-            res.json({ error: "Passwords do not match" });
+            res.status(404).json({ error: "Passwords do not match" });
         }
     } catch (error) {
-        res.json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 }
 
@@ -124,18 +128,18 @@ const signupAsWasher = (req, res) => {
                 if (washer) {
                     const token = createToken(washer._id, washer.email, washer.userType);
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                    res.json({ message: "Signup Successful" });
+                    res.status(200).json({ message: "Signup Successful" });
                 } else {
-                    res.json({ message: "Signup Failed" });
+                    res.status(404).json({ message: "Signup Failed" });
                 }
             }).catch((err) => {
-                res.json({ error: err.message });
+                res.status(404).json({ error: err.message });
             });
         } else {
-            res.json({ message: "Passwords do not match" });
+            res.status(404).json({ message: "Passwords do not match" });
         }
     } catch (error) {
-        res.json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 }
 
