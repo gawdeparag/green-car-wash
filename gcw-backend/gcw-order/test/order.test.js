@@ -4,7 +4,7 @@ const order = require('../routers/order');
 
 var should = chai.should();
 
-describe('Cars API Testing', () => {
+describe('Orders API Testing', () => {
     it('Testing Get Request', () => {
         request(order).get('/order').set('accept', 'application/json')
             .expect('Content-Type', /json/).expect(200);
