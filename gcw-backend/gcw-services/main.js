@@ -32,3 +32,5 @@ app.use('/add-on', addOnRoutes);
 app.listen(PORT, () => {
     console.log(`Services Started at ${PORT}`);
 });
+
+module.exports = app;

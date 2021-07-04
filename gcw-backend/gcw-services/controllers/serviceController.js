@@ -19,10 +19,10 @@ const addService = (req, res) => {
         Service.create(newService).then((service) => {
             res.send(service);
         }).catch((err) => {
-            res.json({ error: err.message });
+            res.status(400).json({ error: err.message });
         });
     } else {
-        res.json({ error: "Invalid User" });
+        res.status(400).json({ error: "Invalid User" });
     }
 };
 

@@ -24,10 +24,10 @@ const addAddOn = (req, res) => {
         AddOn.create(newAddOn).then((addOn) => {
             res.send(addOn);
         }).catch((err) => {
-            res.json({ error: err.message });
+            res.status(400).json({ error: err.message });
         });
     } else {
-        res.json({ error: "Invalid User" });
+        res.status(400).json({ error: "Invalid User" });
     }
 };
 

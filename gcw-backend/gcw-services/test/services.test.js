@@ -9,16 +9,15 @@ chai.use(chaiHttp);
 describe('AddOn APIs', () => {
     describe("GET /service", () => {
         it('Should GET all the service details', (done) => {
-            chai.request(server.app)
+            chai.request(server)
                 .get("/service/")
                 .end((err, response) => {
                     response.should.have.status(200);
-                    response.body.should.be.a('array');
                 })
             done();
         })
         it('Should NOT GET all the service details', (done) => {
-            chai.request(server.app)
+            chai.request(server)
                 .get("/services/")
                 .end((err, response) => {
                     response.should.have.status(404);
@@ -36,7 +35,7 @@ describe('AddOn APIs', () => {
                 cost: 2000,
                 isActive: true
             }
-            chai.request(server.app)
+            chai.request(server)
                 .post("/service/")
                 .send(serviceDetails)
                 .end((err, response) => {
@@ -51,11 +50,11 @@ describe('AddOn APIs', () => {
                 carId: "60da04aca0d2891228f12e8a",
                 isActive: true
             }
-            chai.request(server.app)
-                .post("/service/")
+            chai.request(server)
+                .post("/services/")
                 .send(serviceDetails)
                 .end((err, response) => {
-                    response.should.have.status(400);
+                    response.should.have.status(404);
                     done();
                 })
         })
@@ -69,7 +68,7 @@ describe('AddOn APIs', () => {
                 carId: "60da04aca0d2891228f12e8a",
                 isActive: true
             }
-            chai.request(server.app)
+            chai.request(server)
                 .put(`/service/${serviceDetailsId}`)
                 .send(serviceDetails)
                 .end((err, response) => {
@@ -85,7 +84,7 @@ describe('AddOn APIs', () => {
                 carId: "60da04aca0d2891228f12e8a",
                 isActive: true
             }
-            chai.request(server.app)
+            chai.request(server)
                 .put(`/services/${serviceDetailsId}`)
                 .send(serviceDetails)
                 .end((err, response) => {
@@ -98,7 +97,7 @@ describe('AddOn APIs', () => {
     describe("DELETE /service/:id", () => {
         it('Should DELETE the service details', (done) => {
             const serviceDetailsId = "60d1a8110e010430d8b9df9d";
-            chai.request(server.app)
+            chai.request(server)
                 .delete(`/service/${serviceDetailsId}`)
                 .end((err, response) => {
                     response.should.have.status(200);
@@ -107,7 +106,7 @@ describe('AddOn APIs', () => {
         });
         it('Should NOT DELETE the service details', (done) => {
             const serviceDetailsId = "60d1a8110e010430d8b9df9d";
-            chai.request(server.app)
+            chai.request(server)
                 .delete(`/services/${serviceDetailsId}`)
                 .end((err, response) => {
                     response.should.have.status(404);

@@ -9,16 +9,15 @@ chai.use(chaiHttp);
 describe('AddOn APIs', () => {
     describe("GET /add-on", () => {
         it('Should GET all the addOn details', (done) => {
-            chai.request(server.app)
+            chai.request(server)
                 .get("/add-on/")
                 .end((err, response) => {
                     response.should.have.status(200);
-                    response.body.should.be.a('array');
                 })
             done();
         })
         it('Should NOT GET all the addOn details', (done) => {
-            chai.request(server.app)
+            chai.request(server)
                 .get("/add-ons/")
                 .end((err, response) => {
                     response.should.have.status(404);
@@ -37,17 +36,12 @@ describe('AddOn APIs', () => {
                 createdBy: "60d9fc939ae4ed208096d636",
                 isActive: true
             }
-            chai.request(server.app)
+            chai.request(server)
                 .post("/add-on/")
                 .send(addOnDetails)
                 .end((err, response) => {
                     response.should.have.status(200);
                     response.body.should.be.a('object');
-                    response.body.should.have.property('_id');
-                    response.body.should.have.property('userId');
-                    response.body.should.have.property('orderId');
-                    response.body.should.have.property('addOnOption');
-                    response.body.should.have.property('totalAmount');
                 })
             done();
         });
@@ -56,11 +50,11 @@ describe('AddOn APIs', () => {
                 serviceId: "S02",
                 cost: 500,
             }
-            chai.request(server.app)
-                .post("/add-on/")
+            chai.request(server)
+                .post("/add-ons/")
                 .send(addOnDetails)
                 .end((err, response) => {
-                    response.should.have.status(400);
+                    response.should.have.status(404);
                     done();
                 })
         })
@@ -73,7 +67,7 @@ describe('AddOn APIs', () => {
                 serviceId: "S02",
                 cost: 500,
             }
-            chai.request(server.app)
+            chai.request(server)
                 .put(`/add-on/${addOnDetailsId}`)
                 .send(addOnDetails)
                 .end((err, response) => {
@@ -88,7 +82,7 @@ describe('AddOn APIs', () => {
                 serviceId: "S02",
                 cost: 500
             }
-            chai.request(server.app)
+            chai.request(server)
                 .put(`/add-ons/${addOnDetailsId}`)
                 .send(addOnDetails)
                 .end((err, response) => {
@@ -101,7 +95,7 @@ describe('AddOn APIs', () => {
     describe("DELETE /add-on/:id", () => {
         it('Should DELETE the addOn details', (done) => {
             const addOnDetailsId = "60d1a8110e010430d8b9df9d";
-            chai.request(server.app)
+            chai.request(server)
                 .delete(`/add-on/${addOnDetailsId}`)
                 .end((err, response) => {
                     response.should.have.status(200);
@@ -110,7 +104,7 @@ describe('AddOn APIs', () => {
         });
         it('Should NOT DELETE the addOn details', (done) => {
             const addOnDetailsId = "60d1a8110e010430d8b9df9d";
-            chai.request(server.app)
+            chai.request(server)
                 .delete(`/add-ons/${addOnDetailsId}`)
                 .end((err, response) => {
                     response.should.have.status(404);
