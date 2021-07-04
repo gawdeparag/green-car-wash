@@ -5,10 +5,10 @@ const getPaymentDetails = (req, res) => {
         PaymentDetails.find({ userId: req.userId }).then((paymentDetails) => {
             res.send(paymentDetails);
         }).catch((err) => {
-            res.json({ error: err.message });
+            res.status(404).json({ error: err.message });
         });
     } else {
-        res.json({ error: "Invalid User" });
+        res.status(404).json({ error: "Invalid User" });
     }
 };
 
@@ -50,7 +50,7 @@ const deletePaymentDetails = (req, res) => {
             if (paymentDetails) {
                 res.json({ message: "Payment Details Deleted Successfully" });
             } else {
-                res.json({ error: "Request Payment Details Not Found" });
+                res.json({ error: "Requested Payment Details Not Found" });
             }
         }).catch((err) => {
             res.json({ error: err.message });
