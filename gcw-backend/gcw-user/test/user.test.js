@@ -174,7 +174,7 @@ describe('Washer APIs', () => {
                 userType: "WAsher"
             };
             chai.request(server)
-                .post("/washer/signup")
+                .post("/washer-signup")
                 .send(newUser)
                 .end((err, response) => {
                     response.should.have.status(404);
