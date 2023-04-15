@@ -39,12 +39,12 @@ const createOrder = (req, res) => {
             }).catch((err) => {
                 console.log(err);
             });
-            res.json({ message: "Order created successfully" });
+            res.status(201).json({ message: "Order created successfully" });
         }).catch((err) => {
-            res.json({ error: err.message });
+            res.status(400).json({ error: err.message });
         });
     } else {
-        res.json({ error: "Invalid Request" });
+        res.status(400).json({ error: "Invalid Request" });
     }
 };
 
